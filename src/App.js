@@ -3,7 +3,7 @@ import GameView from './GameView';
 import GameStats from './GameStats';
 import './App.css';
 import BoardController from './game/BoardController';
-import Tetramino from './game/Tetramino';
+import GameController from './game/GameController';
 
 
 class App extends Component{
@@ -11,17 +11,14 @@ class App extends Component{
 		super(props);
 		this.state = {
 			board: BoardController.createBoard(10, 16),
-			current_piece: {
-				type: Tetramino.BLOCK,
-				x: 3,
-				y: 0,
-			},
+			tetramino: GameController.createTetramino(4),
 			time: 0,
 			score: 0,
 			level: 1
 		};
+		console.log("Original", this.state.tetramino);
 		this.timeInterval = setInterval(this.updateTimer.bind(this), 1000);
-		this.gameInterval = setInterval(this.movePiece.bind(this), 50);
+		this.gameInterval = setInterval(this.moveTetramino.bind(this), 50);
 	}
 
 	/**
@@ -36,37 +33,24 @@ class App extends Component{
 	/**
 	 * Moves the current
 	 */
-	movePiece(){
-		const current = this.state.current_piece;
-		let isPositionFree = BoardController.isPositionFree(
-			this.state.board,
-			current.x,
-			current.y + 1,
-			current.type
+	moveTetramino(){
+		const tetramino = this.state.tetramino;
+		if( tetramino === undefined )	return;
+		let newTetramino = GameController.moveTetramino(
+			this.state.board, 
+			tetramino
 		);
-
-		if( isPositionFree ){
+		if( newTetramino !== tetramino ){
 			this.setState({
-				current_piece: {
-					type: current.type,
-					x: current.x,
-					y: current.y + 1
-				}
+				tetramino: newTetramino
 			});
 		} else {
-			let board = BoardController.applyPiece(
-				this.state.board, 
-				current.x, 
-				current.y, 
-				current.type
+			let board = BoardController.applyTetramino(
+				this.state.board, tetramino
 			);
 			let cleared = BoardController.updateBoard(board);
 			this.setState({
-				current_piece: {
-					x: Math.floor(Math.random() * 10),
-					y: 0,
-					type: Tetramino["STRAIGHT"]
-				},
+				tetramino: GameController.createTetramino(4),
 				board: board,
 				score: this.state.score + cleared
 			});

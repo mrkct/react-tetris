@@ -72,20 +72,19 @@ class BoardController{
     }
 
     /**
-     * Returns true if a piece in a certain position doesn't overlap with 
-     * any other already placed pieces in the game board.
+     * Returns true if a tetramino in a certain position doesn't overlap with 
+     * any other already placed tetraminos in the game board.
      * @param {Array[][]} board: The board to check on
      * @param {Number} x: X coordinate, in blocks, starting from left
      * @param {Number} y: Y coordinate, in blocks, starting from top
-     * @param {Tetramino} piece: One of the constants defined in Tetramino
+     * @param {Tetramino} tetramino: One of the constants defined in Tetramino
      */
-    static isPositionFree(board, x, y, piece){
+    static isPositionFree(board, x, y, type){
         const width = board[0].length;
         const height = board.length;
-        
-        for(let i = 0; i < piece.length; i++){
-            for(let j = 0; j < piece[i].length; j++){
-                if( piece[i][j] !== undefined ){
+        for(let i = 0; i < type.length; i++){
+            for(let j = 0; j < type[i].length; j++){
+                if( type[i][j] !== undefined ){
                     let between = (x, low, high) => x > low && x < high;
                     if( !between(x+j, -1, width) || !between(y+i, -1, height) ){
                         return false;
@@ -100,19 +99,20 @@ class BoardController{
     }
 
     /**
-     * Copies all contents in piece over board in the specified position,
+     * Copies all contents in tetramino over board in the specified position,
      * the top-left corner of where to start placing. Returns a new, modified
      * board.
      * @param {Array[][]} board 
      * @param {Number} x 
      * @param {Number} y 
-     * @param {Array[][]} piece 
+     * @param {Array[][]} tetramino 
      */
-    static applyPiece(board, x, y, piece){
+    static applyTetramino(board, tetramino){
         board = this.cloneBoard(board);
-		for(let i = 0; i < piece.length; i++){
-			for(let j = 0; j < piece[i].length; j++){
-				board[y + i][x + j] = piece[i][j];
+        let toApply = tetramino.type;
+        for(let i = 0; i < toApply.length; i++){
+			for(let j = 0; j < toApply[i].length; j++){
+				board[tetramino.y + i][tetramino.x + j] = toApply[i][j];
 			}
         }
         return board;
