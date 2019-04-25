@@ -61,7 +61,9 @@ class App extends Component{
 	render(){
     	return (
     		<div className="App">
-				<GameView board={this.state.board} />
+				<GameView 
+					board={this.state.board} 
+					falling={this.state.tetramino} />
 				<GameStats 
 					score={this.state.score} 
 					level={this.state.level}

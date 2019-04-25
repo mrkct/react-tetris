@@ -45,6 +45,23 @@ class GameView extends Component {
                 }
             }
         }
+
+        const falling = this.props.falling;
+        if( falling !== undefined ){
+            for(let i = 0; i < falling.type.length; i++){
+                for(let j = 0; j < falling.type[i].length; j++){
+                    if( falling.type[i][j] !== undefined ){
+                        ctx.fillStyle = falling.type[i][j];
+                        ctx.fillRect(
+                            blockSize * (falling.x + j),
+                            blockSize * (falling.y + i),
+                            blockSize,
+                            blockSize
+                        );
+                    }
+                }
+            }
+        }
         ctx.restore();
     }
 
