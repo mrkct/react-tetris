@@ -4,7 +4,8 @@ const COLORS = {
     BLUE: "#0000FF",
     AQUA: "#00FFFF",
     YELLOW: "#FFFF00",
-    PURPLE: "#FF00FF"
+    PURPLE: "#FF00FF",
+    ORANGE: "#FF4F0F"
 };
 
 export default {
@@ -19,12 +20,12 @@ export default {
         [COLORS.AQUA]
     ],
     L_SHAPE: [
-        [COLORS.RED, undefined, undefined],
-        [COLORS.RED, COLORS.RED, COLORS.RED]
+        [COLORS.ORANGE, undefined, undefined],
+        [COLORS.ORANGE, COLORS.ORANGE, COLORS.ORANGE]
     ],
     J_SHAPE: [
-        [undefined, undefined, COLORS.RED],
-        [COLORS.RED, COLORS.RED, COLORS.RED]
+        [undefined, undefined, COLORS.BLUE],
+        [COLORS.BLUE, COLORS.BLUE, COLORS.BLUE]
     ],
     T_SHAPE: [
         [undefined, COLORS.PURPLE, undefined],
@@ -37,5 +38,9 @@ export default {
     Z_SHAPE: [
         [COLORS.RED, COLORS.RED, undefined],
         [undefined, COLORS.RED, COLORS.RED]
+    ],
+    TYPES: [
+        "BLOCK", "STRAIGHT", "L_SHAPE", "J_SHAPE", 
+        "T_SHAPE", "S_SHAPE", "Z_SHAPE"
     ]
 };
