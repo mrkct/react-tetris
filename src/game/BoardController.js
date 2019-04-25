@@ -112,7 +112,9 @@ class BoardController{
         let toApply = tetramino.type;
         for(let i = 0; i < toApply.length; i++){
 			for(let j = 0; j < toApply[i].length; j++){
-				board[tetramino.y + i][tetramino.x + j] = toApply[i][j];
+                if( toApply[i][j] !== undefined ){
+                    board[tetramino.y + i][tetramino.x + j] = toApply[i][j];
+                }
 			}
         }
         return board;
