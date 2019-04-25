@@ -16,7 +16,6 @@ class App extends Component{
 			score: 0,
 			level: 1
 		};
-		console.log("Original", this.state.tetramino);
 		this.timeInterval = setInterval(this.updateTimer.bind(this), 1000);
 		this.gameInterval = setInterval(this.moveTetramino.bind(this), 50);
 	}
@@ -50,7 +49,9 @@ class App extends Component{
 			);
 			let cleared = BoardController.updateBoard(board);
 			this.setState({
-				tetramino: GameController.createTetramino(4),
+				tetramino: GameController.createTetramino(
+					Math.floor(Math.random() * (board[0].length-2))
+				),
 				board: board,
 				score: this.state.score + cleared
 			});
