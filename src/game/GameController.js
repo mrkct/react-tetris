@@ -16,6 +16,7 @@ class GameController{
         return {
             x: x,
             y: 0,
+            rotation: 0,
             type: Tetramino[type]
         };
     }
@@ -50,7 +51,7 @@ class GameController{
 			board,
 			tetramino.x + translate.x,
 			tetramino.y + translate.y,
-			tetramino.type
+			tetramino.type[tetramino.rotation]
         );
         if( !isPositionFree ){
             return tetramino;
@@ -58,6 +59,38 @@ class GameController{
         return {
             x: tetramino.x + translate.x,
             y: tetramino.y + translate.y,
+            rotation: tetramino.rotation,
+            type: tetramino.type
+        };
+    }
+
+    /**
+     * 
+     * @param {*} board 
+     * @param {*} tetramino 
+     * @param {*} direction 
+     */
+    static rotateTetramino(board, tetramino, direction){
+        let newRotationIndex = tetramino.rotation;
+        if( direction === "left" ){
+            newRotationIndex += (tetramino.type.length-1);
+        } else if ( direction === "right" ){
+            newRotationIndex += 1;
+        }
+        newRotationIndex = newRotationIndex % tetramino.type.length;
+        let isPositionFree = BoardController.isPositionFree(
+			board,
+			tetramino.x,
+			tetramino.y,
+			tetramino.type[newRotationIndex]
+        );
+        if( !isPositionFree ){
+            return tetramino;
+        } 
+        return {
+            x: tetramino.x,
+            y: tetramino.y,
+            rotation: newRotationIndex,
             type: tetramino.type
         };
     }

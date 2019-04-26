@@ -48,10 +48,11 @@ class GameView extends Component {
 
         const falling = this.props.falling;
         if( falling !== undefined ){
-            for(let i = 0; i < falling.type.length; i++){
-                for(let j = 0; j < falling.type[i].length; j++){
-                    if( falling.type[i][j] !== undefined ){
-                        ctx.fillStyle = falling.type[i][j];
+            const tetramino = falling.type[falling.rotation];
+            for(let i = 0; i < tetramino.length; i++){
+                for(let j = 0; j < tetramino[i].length; j++){
+                    if( tetramino[i][j] !== undefined ){
+                        ctx.fillStyle = tetramino[i][j];
                         ctx.fillRect(
                             blockSize * (falling.x + j),
                             blockSize * (falling.y + i),

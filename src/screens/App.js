@@ -18,7 +18,7 @@ class App extends Component{
 			level: 1
 		}; 
 		this.timeInterval = setInterval(this.updateTimer.bind(this), 1000);
-		this.gameInterval = setInterval(this.moveTetramino.bind(this), 250);
+		this.gameInterval = setInterval(this.moveTetramino.bind(this), 1000);
 
 		this.onInput = this.onInput.bind(this);
 	}
@@ -63,6 +63,13 @@ class App extends Component{
 	onInput(type, direction){
 		if( type === "move" ){
 			let tetramino = GameController.moveTetramino(
+				this.state.board, this.state.tetramino, direction
+			);
+			this.setState({
+				tetramino: tetramino
+			});
+		} else if ( type === "rotate" ){
+			let tetramino = GameController.rotateTetramino(
 				this.state.board, this.state.tetramino, direction
 			);
 			this.setState({

@@ -77,7 +77,8 @@ class BoardController{
      * @param {Array[][]} board: The board to check on
      * @param {Number} x: X coordinate, in blocks, starting from left
      * @param {Number} y: Y coordinate, in blocks, starting from top
-     * @param {Tetramino} tetramino: One of the constants defined in Tetramino
+     * @param {Array[][]} type: An array of color strings, representing the
+     * tetramino
      */
     static isPositionFree(board, x, y, type){
         const width = board[0].length;
@@ -109,7 +110,7 @@ class BoardController{
      */
     static applyTetramino(board, tetramino){
         board = this.cloneBoard(board);
-        let toApply = tetramino.type;
+        let toApply = tetramino.type[tetramino.rotation];
         for(let i = 0; i < toApply.length; i++){
 			for(let j = 0; j < toApply[i].length; j++){
                 if( toApply[i][j] !== undefined ){

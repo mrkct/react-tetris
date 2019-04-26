@@ -10,34 +10,118 @@ const COLORS = {
 
 export default {
     BLOCK: [
-        [COLORS.YELLOW, COLORS.YELLOW],
-        [COLORS.YELLOW, COLORS.YELLOW]
+        [
+            [COLORS.YELLOW, COLORS.YELLOW],
+            [COLORS.YELLOW, COLORS.YELLOW]
+        ]
     ],
     STRAIGHT: [
-        [COLORS.AQUA],
-        [COLORS.AQUA],
-        [COLORS.AQUA],
-        [COLORS.AQUA]
+        [
+            [undefined, undefined, COLORS.AQUA, undefined],
+            [undefined, undefined, COLORS.AQUA, undefined],
+            [undefined, undefined, COLORS.AQUA, undefined],
+            [undefined, undefined, COLORS.AQUA, undefined]
+        ],
+        [
+            [undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, undefined],
+            [COLORS.AQUA, COLORS.AQUA, COLORS.AQUA, COLORS.AQUA],
+            [undefined, undefined, undefined, undefined],
+        ]
     ],
     L_SHAPE: [
-        [COLORS.ORANGE, undefined, undefined],
-        [COLORS.ORANGE, COLORS.ORANGE, COLORS.ORANGE]
+        [
+            [undefined, undefined, undefined],
+            [undefined, undefined, undefined],
+            [COLORS.ORANGE, undefined, undefined],
+            [COLORS.ORANGE, COLORS.ORANGE, COLORS.ORANGE]
+        ],
+        [
+            [COLORS.ORANGE, COLORS.ORANGE, undefined],
+            [COLORS.ORANGE, undefined, undefined],
+            [COLORS.ORANGE, undefined, undefined],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [COLORS.ORANGE, COLORS.ORANGE, COLORS.ORANGE],
+            [undefined, undefined, COLORS.ORANGE],
+            [undefined, undefined, undefined],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [undefined, undefined, undefined],
+            [undefined, undefined, COLORS.ORANGE],
+            [undefined, undefined, COLORS.ORANGE],
+            [undefined, COLORS.ORANGE, COLORS.ORANGE]
+        ]
     ],
     J_SHAPE: [
-        [undefined, undefined, COLORS.BLUE],
-        [COLORS.BLUE, COLORS.BLUE, COLORS.BLUE]
+        [
+            [undefined, undefined, undefined],
+            [undefined, undefined, COLORS.BLUE],
+            [COLORS.BLUE, COLORS.BLUE, COLORS.BLUE]
+        ],
+        [
+            [COLORS.BLUE, undefined, undefined],
+            [COLORS.BLUE, undefined, undefined],
+            [COLORS.BLUE, COLORS.BLUE, undefined]
+        ],
+        [
+            [COLORS.BLUE, COLORS.BLUE, COLORS.BLUE],
+            [COLORS.BLUE, undefined, undefined],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [undefined, COLORS.BLUE, COLORS.BLUE],
+            [undefined, undefined, COLORS.BLUE],
+            [undefined, undefined, COLORS.BLUE]
+        ]
     ],
     T_SHAPE: [
-        [undefined, COLORS.PURPLE, undefined],
-        [COLORS.PURPLE, COLORS.PURPLE, COLORS.PURPLE]
+        [
+            [undefined, undefined, undefined],
+            [undefined, COLORS.PURPLE, undefined],
+            [COLORS.PURPLE, COLORS.PURPLE, COLORS.PURPLE]
+        ],
+        [
+            [COLORS.PURPLE, undefined, undefined],
+            [COLORS.PURPLE, COLORS.PURPLE, undefined],
+            [COLORS.PURPLE, undefined, undefined]
+        ],
+        [
+            [COLORS.PURPLE, COLORS.PURPLE, COLORS.PURPLE],
+            [undefined, COLORS.PURPLE, undefined],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [undefined, undefined, COLORS.PURPLE],
+            [undefined, COLORS.PURPLE, COLORS.PURPLE],
+            [undefined, undefined, COLORS.PURPLE]
+        ],
     ],
     S_SHAPE: [
-        [undefined, COLORS.GREEN, COLORS.GREEN],
-        [COLORS.GREEN, COLORS.GREEN, undefined]
+        [
+            [undefined, COLORS.GREEN, COLORS.GREEN],
+            [COLORS.GREEN, COLORS.GREEN, undefined],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [undefined, COLORS.GREEN, undefined, undefined],
+            [undefined, COLORS.GREEN, COLORS.GREEN, undefined],
+            [undefined, undefined, COLORS.GREEN, undefined]
+        ]
     ],
     Z_SHAPE: [
-        [COLORS.RED, COLORS.RED, undefined],
-        [undefined, COLORS.RED, COLORS.RED]
+        [
+            [COLORS.RED, COLORS.RED, undefined],
+            [undefined, COLORS.RED, COLORS.RED],
+            [undefined, undefined, undefined]
+        ],
+        [
+            [undefined, undefined, COLORS.RED, undefined],
+            [undefined, COLORS.RED, COLORS.RED, undefined],
+            [undefined, COLORS.RED, undefined, undefined]
+        ]
     ],
     TYPES: [
         "BLOCK", "STRAIGHT", "L_SHAPE", "J_SHAPE", 
