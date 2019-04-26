@@ -20,6 +20,24 @@ class GameView extends Component {
         this.width = this.blockSize * board[0].length;
     }
 
+    drawBlock(context, x, y, blockSize, color){
+        const thickness = 2;
+        context.fillStyle = "black";
+        context.fillRect(
+            blockSize * x,
+            blockSize * y,
+            blockSize,
+            blockSize
+        );
+        context.fillStyle = color;
+        context.fillRect(
+            (blockSize * x) + thickness,
+            (blockSize * y) + thickness,
+            blockSize - (thickness*2),
+            blockSize - (thickness*2)
+        );
+    }
+
     componentDidUpdate(){
         const canvas = this.canvasRef.current;
         const ctx = canvas.getContext("2d");
@@ -28,20 +46,14 @@ class GameView extends Component {
         const height = this.height;
 
         ctx.save();
-        ctx.fillStyle = "#000000";
+        ctx.fillStyle = "gray";
         ctx.fillRect(0, 0, width, height);
         
         const board = this.props.board;
         for(let i = 0; i < board.length; i++) {
             for(let j = 0; j < board[i].length; j++) {
                 if( board[i][j] !== undefined ) {
-                    ctx.fillStyle = board[i][j];
-                    ctx.fillRect(
-                        blockSize * j, 
-                        blockSize * i, 
-                        blockSize, 
-                        blockSize
-                    );
+                    this.drawBlock(ctx, j, i, blockSize, board[i][j]);
                 }
             }
         }
@@ -52,12 +64,12 @@ class GameView extends Component {
             for(let i = 0; i < tetramino.length; i++){
                 for(let j = 0; j < tetramino[i].length; j++){
                     if( tetramino[i][j] !== undefined ){
-                        ctx.fillStyle = tetramino[i][j];
-                        ctx.fillRect(
-                            blockSize * (falling.x + j),
-                            blockSize * (falling.y + i),
-                            blockSize,
-                            blockSize
+                        this.drawBlock(
+                            ctx,
+                            falling.x + j, 
+                            falling.y + i, 
+                            blockSize, 
+                            tetramino[i][j]
                         );
                     }
                 }
