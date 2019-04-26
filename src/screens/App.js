@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import GameView from './GameView';
-import GameStats from './GameStats';
+import GameView from '../components/GameView';
+import GameStats from '../components/GameStats';
 import './App.css';
-import BoardController from './game/BoardController';
-import GameController from './game/GameController';
+import BoardController from '../game/BoardController';
+import GameController from '../game/GameController';
+import GameInput from '../components/GameInput';
 
 
 class App extends Component{
@@ -15,9 +16,11 @@ class App extends Component{
 			time: 0,
 			score: 0,
 			level: 1
-		};
+		}; 
 		this.timeInterval = setInterval(this.updateTimer.bind(this), 1000);
-		this.gameInterval = setInterval(this.moveTetramino.bind(this), 50);
+		this.gameInterval = setInterval(this.moveTetramino.bind(this), 250);
+
+		this.onInput = this.onInput.bind(this);
 	}
 
 	/**
@@ -37,7 +40,8 @@ class App extends Component{
 		if( tetramino === undefined )	return;
 		let newTetramino = GameController.moveTetramino(
 			this.state.board, 
-			tetramino
+			tetramino,
+			"down"
 		);
 		if( newTetramino !== tetramino ){
 			this.setState({
@@ -49,11 +53,20 @@ class App extends Component{
 			);
 			let cleared = BoardController.updateBoard(board);
 			this.setState({
-				tetramino: GameController.createTetramino(
-					Math.floor(Math.random() * (board[0].length-2))
-				),
+				tetramino: GameController.createTetramino(4),
 				board: board,
 				score: this.state.score + cleared
+			});
+		}
+	}
+
+	onInput(type, direction){
+		if( type === "move" ){
+			let tetramino = GameController.moveTetramino(
+				this.state.board, this.state.tetramino, direction
+			);
+			this.setState({
+				tetramino: tetramino
 			});
 		}
 	}
@@ -68,6 +81,7 @@ class App extends Component{
 					score={this.state.score} 
 					level={this.state.level}
 					time={this.state.time} />
+				<GameInput onInput={this.onInput} />
     		</div>
     	);
 	}

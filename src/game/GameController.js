@@ -21,24 +21,43 @@ class GameController{
     }
 
     /**
-     * Tries to move the passed tetramino one row down and returns a new object 
-     * with the new position, if updated, otherwise the same object is returned.
+     * Tries to move the passed tetramino one cell in the passed direction and  
+     * returns a new tetramino with the new position, if updated, otherwise the 
+     * same object is returned.
      * @param {Array[][]} board 
      * @param {Tetramino} tetramino 
+     * @param {String} direction: One of ['down', 'left', 'right']
      */
-    static moveTetramino(board, tetramino){
+    static moveTetramino(board, tetramino, direction){
+        let translate = {x: 0, y: 0};
+        switch(direction){
+            case "down":
+                translate = {x: 0, y: +1};
+                break;
+            case "left":
+                translate = {x: -1, y: 0};
+                break;
+            case "right":
+                translate = {x: +1, y: 0};
+                break;
+            default:
+                console.warn(
+                    "Only 'down', 'left', 'right' are allowed values " + 
+                    "for direction. Got " + direction + ". This moveTetramino call will do nothing."
+                );
+        }
         let isPositionFree = BoardController.isPositionFree(
 			board,
-			tetramino.x,
-			tetramino.y + 1,
+			tetramino.x + translate.x,
+			tetramino.y + translate.y,
 			tetramino.type
         );
         if( !isPositionFree ){
             return tetramino;
         } 
         return {
-            x: tetramino.x,
-            y: tetramino.y + 1,
+            x: tetramino.x + translate.x,
+            y: tetramino.y + translate.y,
             type: tetramino.type
         };
     }
