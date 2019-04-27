@@ -10,7 +10,22 @@ import Config from './gamelogic/Config';
 class Tetris extends React.Component{
     constructor(props){
 		super(props);
-		this.state = {
+		this.onInput = this.onInput.bind(this);
+		this.updateTimer = this.updateTimer.bind(this);
+		this.gameTimer = this.gameTimer.bind(this);
+		this.createInitialGameState = this.createInitialGameState.bind(this);
+		this.startIntervals = this.startIntervals.bind(this);
+
+		this.state = this.createInitialGameState();
+		this.startIntervals();
+	}
+
+	/**
+	 * Returns an object representing the game state at the very 
+	 * beginning. 
+	 */
+	createInitialGameState(){
+		return {
 			board: BoardController.createBoard(
 				this.props.width, this.props.height
 			),
@@ -20,11 +35,19 @@ class Tetris extends React.Component{
 			time: 0,
 			score: 0,
 			level: 1
-		}; 
-		this.onInput = this.onInput.bind(this);
-		this.updateTimer = this.updateTimer.bind(this);
-		this.gameTimer = this.gameTimer.bind(this);
+		};
+	}
 
+	/**
+	 * Starts the game and time intervals
+	 */
+	startIntervals(){
+		if( this.timeInterval !== undefined ){
+			clearInterval(this.timeInterval);
+		}
+		if( this.gameInterval !== undefined ){
+			clearInterval(this.gameInterval);
+		}
 		this.timeInterval = setInterval(this.updateTimer, 1000);
 		this.gameInterval = setInterval(
 			this.gameTimer, GameController.calculateGameTimer(1)
