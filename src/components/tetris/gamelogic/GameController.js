@@ -107,6 +107,20 @@ class GameController{
 			Config.TIMER.START - (level-1) * Config.TIMER.DECREMENT
 		);
     }
+
+    /**
+     * Returns true if the player has reached game over. Game over is defined 
+     * by the player having at least 1 block in the first row of the board.
+     * @param {Array[][]} board 
+     */
+    static isGameOver(board){
+        for(let i = 0; i < board[0].length; i++){
+            if( board[0][i] !== undefined ){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 export default GameController;

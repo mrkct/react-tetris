@@ -10,11 +10,13 @@ import Config from './gamelogic/Config';
 class Tetris extends React.Component{
     constructor(props){
 		super(props);
+		this.restart = this.restart.bind(this);
 		this.onInput = this.onInput.bind(this);
 		this.updateTimer = this.updateTimer.bind(this);
 		this.gameTimer = this.gameTimer.bind(this);
 		this.createInitialGameState = this.createInitialGameState.bind(this);
 		this.startIntervals = this.startIntervals.bind(this);
+
 
 		this.state = this.createInitialGameState();
 		this.startIntervals();
@@ -26,6 +28,7 @@ class Tetris extends React.Component{
 	 */
 	createInitialGameState(){
 		return {
+			playing: true,
 			board: BoardController.createBoard(
 				this.props.width, this.props.height
 			),
@@ -42,16 +45,20 @@ class Tetris extends React.Component{
 	 * Starts the game and time intervals
 	 */
 	startIntervals(){
-		if( this.timeInterval !== undefined ){
-			clearInterval(this.timeInterval);
-		}
-		if( this.gameInterval !== undefined ){
-			clearInterval(this.gameInterval);
-		}
 		this.timeInterval = setInterval(this.updateTimer, 1000);
 		this.gameInterval = setInterval(
 			this.gameTimer, GameController.calculateGameTimer(1)
 		);
+	}
+
+	/**
+	 * Resets the state and intervals to their initial states.
+	 */
+	restart(){
+		this.setState(this.createInitialGameState());
+		clearInterval(this.timeInterval);		
+		clearInterval(this.gameInterval);
+		this.startIntervals();
 	}
 
 	/**
@@ -110,6 +117,13 @@ class Tetris extends React.Component{
 				board: board,
 				score: this.state.score + cleared
 			});
+			if( GameController.isGameOver(board) ){
+				this.setState({
+					playing: false
+				});
+				clearInterval(this.gameInterval);
+				clearInterval(this.timeInterval);
+			}
 		}
 	}
 
@@ -148,6 +162,9 @@ class Tetris extends React.Component{
 	render(){
     	return (
     		<div className="App">
+				<h1>
+					{ this.state.playing? "Tetris!" : "Game Over!" }
+				</h1>
 				<GameView 
 					board={this.state.board} 
 					falling={this.state.falling} />
@@ -156,6 +173,9 @@ class Tetris extends React.Component{
 					level={this.state.level}
 					time={this.state.time} />
 				<GameInput onInput={this.onInput} />
+				<button onClick={this.restart}>
+					Restart Game
+				</button>
     		</div>
     	);
 	}
