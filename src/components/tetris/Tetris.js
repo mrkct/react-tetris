@@ -23,11 +23,11 @@ class Tetris extends React.Component{
 		}; 
 		this.onInput = this.onInput.bind(this);
 		this.updateTimer = this.updateTimer.bind(this);
-		this.gameInterval = this.gameInterval.bind(this);
+		this.gameTimer = this.gameTimer.bind(this);
 
 		this.timeInterval = setInterval(this.updateTimer, 1000);
 		this.gameInterval = setInterval(
-			this.gameInterval, Config.TIMER.START
+			this.gameTimer, Config.TIMER.START
 		);
 	}
 
@@ -49,12 +49,12 @@ class Tetris extends React.Component{
 		this.setState({
 			level: newLevel
 		});
-		let newInterval = Math.max([
+		let newInterval = Math.max(
 			Config.TIMER.LOWEST, 
 			Config.TIMER.START - newLevel * Config.TIMER.DECREMENT
-		]);
+		);
 		clearInterval(this.gameInterval);
-		this.gameInterval = setInterval(this.gameInterval, newInterval);
+		this.gameInterval = setInterval(this.gameTimer, newInterval);
 	}
 
 	/**
@@ -62,24 +62,25 @@ class Tetris extends React.Component{
 	 * if it can't go down more and sets another new tetramino as the falling 
 	 * one.
 	 */
-	gameInterval(){
-		const tetramino = this.state.falling;
-		if( tetramino === undefined )	return;
+	gameTimer(){
+		const falling = this.state.falling;
+		if( falling === undefined )	return;
 		let newTetramino = GameController.moveTetramino(
 			this.state.board, 
-			tetramino,
+			falling,
 			"down"
 		);
-		if( newTetramino !== tetramino ){
+		if( newTetramino !== falling ){
 			this.setState({
 				falling: newTetramino
 			});
 		} else {
 			let board = BoardController.applyTetramino(
-				this.state.board, tetramino
+				this.state.board, falling
 			);
 			let cleared = BoardController.updateBoard(board);
-			if( this.state.score % 10 + cleared >= 10 ){
+			const rpl = Config.ROWS_PER_LEVEL;
+			if( this.state.score % rpl + cleared >= rpl ){
 				this.incrementLevel();
 			}
 			this.setState({
@@ -99,22 +100,24 @@ class Tetris extends React.Component{
 	 */
 	onInput(input){
 		let tetramino = this.state.falling;
-		if( input === Input.MOVE.LEFT || input === Input.MOVE.RIGHT ){
-			let direction = input === Input.MOVE.LEFT ? "left" : "right";
-			tetramino = GameController.moveTetramino(
-				this.state.board, tetramino, direction
-			);
+		if( input === Input.MOVE.DOWN ){
+			this.gameTimer();
 		} else {
-			if ( input === Input.ROTATE.LEFT || input === Input.ROTATE.RIGHT ){
-				let direction = input === Input.ROTATE.LEFT ? "left" : "right";
+			if( input === Input.MOVE.LEFT || input === Input.MOVE.RIGHT ){
+				let direction = input === Input.MOVE.LEFT ? "left" : "right";
+				tetramino = GameController.moveTetramino(
+					this.state.board, tetramino, direction
+				);
+			} else {
+				let direction = input === Input.ROTATE.LEFT ? "left" :"right";
 				tetramino = GameController.rotateTetramino(
 					this.state.board, tetramino, direction
 				);
 			}
+			this.setState({
+				falling: tetramino
+			});
 		}
-		this.setState({
-			falling: tetramino
-		});
 	}
 
 	render(){

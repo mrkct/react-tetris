@@ -20,5 +20,6 @@ export default {
         HEIGHT: 16,
         BLOCKSIZE: 24,
         START_POINT: 4
-    }
+    },
+    ROWS_PER_LEVEL: 10
 };
