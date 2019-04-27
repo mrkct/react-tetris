@@ -27,7 +27,7 @@ class Tetris extends React.Component{
 
 		this.timeInterval = setInterval(this.updateTimer, 1000);
 		this.gameInterval = setInterval(
-			this.gameTimer, Config.TIMER.START
+			this.gameTimer, GameController.calculateGameTimer(1)
 		);
 	}
 
@@ -49,10 +49,7 @@ class Tetris extends React.Component{
 		this.setState({
 			level: newLevel
 		});
-		let newInterval = Math.max(
-			Config.TIMER.LOWEST, 
-			Config.TIMER.START - newLevel * Config.TIMER.DECREMENT
-		);
+		let newInterval = GameController.calculateGameTimer(newLevel);
 		clearInterval(this.gameInterval);
 		this.gameInterval = setInterval(this.gameTimer, newInterval);
 	}
@@ -101,7 +98,12 @@ class Tetris extends React.Component{
 	onInput(input){
 		let tetramino = this.state.falling;
 		if( input === Input.MOVE.DOWN ){
-			this.gameTimer();
+            this.gameTimer();
+            clearInterval(this.gameInterval);
+            this.gameInterval = setInterval(
+                this.gameTimer, 
+                GameController.calculateGameTimer(this.state.level)
+            );
 		} else {
 			if( input === Input.MOVE.LEFT || input === Input.MOVE.RIGHT ){
 				let direction = input === Input.MOVE.LEFT ? "left" : "right";

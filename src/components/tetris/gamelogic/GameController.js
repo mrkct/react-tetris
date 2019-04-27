@@ -1,6 +1,6 @@
 import BoardController from './BoardController';
 import Tetramino from './Tetramino';
-
+import Config from './Config';
 
 class GameController{
     /**
@@ -93,6 +93,19 @@ class GameController{
             rotation: newRotationIndex,
             type: tetramino.type
         };
+    }
+
+    /**
+     * Returns, in milliseconds, how much the game timer needs to wait 
+     * before moving the falling piece down 1 block.
+     * @param {Number} level: A number representing the current level, starting 
+     * from 1
+     */
+    static calculateGameTimer(level){
+        return Math.max(
+			Config.TIMER.LOWEST, 
+			Config.TIMER.START - (level-1) * Config.TIMER.DECREMENT
+		);
     }
 }
 
