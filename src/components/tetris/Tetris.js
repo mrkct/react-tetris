@@ -133,6 +133,9 @@ class Tetris extends React.Component{
 	 * @param {String} input: One of the constants defined in GameInput.Input
 	 */
 	onInput(input){
+		if( !this.state.playing ){
+			return;
+		}
 		let tetramino = this.state.falling;
 		if( input === Input.MOVE.DOWN ){
             this.gameTimer();
