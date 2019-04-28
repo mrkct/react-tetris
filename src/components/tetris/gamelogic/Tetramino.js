@@ -1,7 +1,7 @@
 const COLORS = {
     RED: "#FF0000",
     GREEN: "#00FF00",
-    BLUE: "#0000FF",
+    BLUE: "#004FFF",
     AQUA: "#00FFFF",
     YELLOW: "#FFFF00",
     PURPLE: "#FF00FF",
