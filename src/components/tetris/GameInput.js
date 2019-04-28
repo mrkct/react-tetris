@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './GameInput.css';
 
 
 export class GameInput extends Component{
@@ -32,21 +33,25 @@ export class GameInput extends Component{
         const cb = this.props.onInput;
         return (
             <div className="gameController">
-                <button onClick={cb.bind(this, Input.MOVE.LEFT)}>
-                    Left
-                </button>
-                <button onClick={cb.bind(this, Input.MOVE.RIGHT)}>
-                    Right
-                </button>
-                <button onClick={cb.bind(this, Input.MOVE.DOWN)}>
-                    Down
-                </button>
-                <button onClick={cb.bind(this, Input.ROTATE.LEFT)}>
-                    Rotate Left
-                </button>
-                <button onClick={cb.bind(this, Input.ROTATE.RIGHT)}>
-                    Rotate Right
-                </button>
+                <div className="moveButtons">
+                    <button className="gameButton" onClick={cb.bind(this, Input.MOVE.LEFT)}>
+                        Left
+                    </button>
+                    <button className="gameButton" onClick={cb.bind(this, Input.MOVE.DOWN)}>
+                        Down
+                    </button>
+                    <button className="gameButton" onClick={cb.bind(this, Input.MOVE.RIGHT)}>
+                        Right
+                    </button>
+                </div>
+                <div className="rotateButtons">
+                    <button className="gameButton" onClick={cb.bind(this, Input.ROTATE.LEFT)}>
+                        Rotate Left
+                    </button>
+                    <button className="gameButton" onClick={cb.bind(this, Input.ROTATE.RIGHT)}>
+                        Rotate Right
+                    </button>
+                </div>
             </div>
         );
     }
