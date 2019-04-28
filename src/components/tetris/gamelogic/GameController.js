@@ -65,12 +65,16 @@ class GameController{
     }
 
     /**
-     * 
-     * @param {*} board 
-     * @param {*} tetramino 
-     * @param {*} direction 
+     * Tries to rotate the tetramino by 90deg in the argument direction.
+     * If it cannot rotate, it also tries by moving the tetramino 1 or 2 
+     * blocks on the left or right and then rotating. If that also fails, it 
+     * returns the same passed tetramino
+     * @param {Array[][]} board 
+     * @param {Tetramino} tetramino 
+     * @param {String} direction: either "left" or "right" 
      */
     static rotateTetramino(board, tetramino, direction){
+        const max_offset_attempts = 2;
         let newRotationIndex = tetramino.rotation;
         if( direction === "left" ){
             newRotationIndex += (tetramino.type.length-1);
@@ -78,21 +82,29 @@ class GameController{
             newRotationIndex += 1;
         }
         newRotationIndex = newRotationIndex % tetramino.type.length;
-        let isPositionFree = BoardController.isPositionFree(
-			board,
-			tetramino.x,
-			tetramino.y,
-			tetramino.type[newRotationIndex]
+        let tryPositionFree = (offset) => BoardController.isPositionFree(
+            board, tetramino.x + offset, tetramino.y, tetramino.type[newRotationIndex]
         );
-        if( !isPositionFree ){
+        let offset = undefined;
+        for(let i = 0; i < max_offset_attempts; i++){
+            if( tryPositionFree(i) ){
+                offset = i;
+                break;
+            } else if ( tryPositionFree(-i) ){
+                offset = -i;
+                break;
+            }
+        }
+        if( offset !== undefined ){
+            return {
+                x: tetramino.x + offset,
+                y: tetramino.y,
+                rotation: newRotationIndex,
+                type: tetramino.type
+            };
+        } else {
             return tetramino;
-        } 
-        return {
-            x: tetramino.x,
-            y: tetramino.y,
-            rotation: newRotationIndex,
-            type: tetramino.type
-        };
+        }
     }
 
     /**
