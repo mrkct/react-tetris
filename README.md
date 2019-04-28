@@ -17,6 +17,5 @@ If you want to build this, to use in your website maybe, change the `"homepage"`
 
 ### What is missing
 - Fix the blocks rotation: they don't use the same block pivot as the original game
-- Allowing to rotate blocks at the borders of the game, moving away the blocks if they don't fit
 - Nicer buttons for mobile play
 - An actual site style, right now it's just the game in an empty page
